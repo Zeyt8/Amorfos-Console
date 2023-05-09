@@ -10,7 +10,7 @@ typedef struct Entity {
     unsigned int childCount;
     struct Entity *parent;
     Vector3 color;
-    bool isVisible = true;
+    bool isVisible;
 } Entity;
 
 /// @brief Increases the enitity's position by the given x and y values

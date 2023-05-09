@@ -1,45 +1,9 @@
 #pragma once
 
 #include "arduino.h"
-#include "input.h"
-#include "entity.h"
-#include "rendering.h"
-#include "audio.h"
-#include "vector.h"
+#include <stdbool.h>
 
-Entity** entities;
-unsigned int entityCount;
-Input input;
-float time;
-
-/// @brief Called at the start of the game
-void Start();
-/// @brief The main game loop. Delta time is the time since the last frame
-/// @param deltaTime 
-void Update(float deltaTime);
-/// @brief Create an entity
-/// @return The created entity
-Entity* CreateEntity() {
-    Entity* entity = new Entity();
-    entity->type = 0;
-    entity->position = Vector3(0, 0, 0);
-    entity->children = NULL;
-    entity->childCount = 0;
-    entity->parent = NULL;
-    entity->color = Vector3(1, 1, 1);
-    entity->isVisible = true;
-    return entity;
-}
-/// @brief Destroy an entity
-void DestroyEntity() {
-    for (int i = 0; i < entityCount; i++) {
-        if (entities[i] == entity) {
-            entities[i] = entities[entityCount - 1];
-            entityCount--;
-            break;
-        }
-    }
-}
+#include "amorfos.h"
 
 // button north
 ISR(PCINT18_vect) {
@@ -116,6 +80,6 @@ void loop() {
     Update(deltaTime);
     render(entities, entityCount);
     // update joystick input
-    input.joystickY = PIND & (1 << PD0) / 1023.0f;
-    input.joystickX = PIND & (1 << PD1) / 1023.0f;
+    input.joystickY = (PIND & (1 << PD0)) / 1023.0f;
+    input.joystickX = (PIND & (1 << PD1)) / 1023.0f;
 }
