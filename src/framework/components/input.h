@@ -18,7 +18,7 @@ typedef struct Input {
 
 /// @brief Called when a button is pressed
 /// @param button Id of the button. Use the BUTTON_* constants
-void OnButtonPress(int button);
+extern void OnButtonPress(int button);
 /// @brief Called when a button is released
 /// @param button Id of the button. Use the BUTTON_* constants
-void OnButtonRelease(int button);
+extern void OnButtonRelease(int button);

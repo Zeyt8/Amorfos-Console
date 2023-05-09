@@ -1,4 +1,4 @@
-#include "amorfos.h"
+#include "../framework/amorfos.h"
 
 void Start() {
 

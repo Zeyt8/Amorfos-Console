@@ -1,15 +1,4 @@
-#pragma once
-
-typedef struct Vector2 {
-    float x;
-    float y;
-} Vector2;
-
-typedef struct Vector3 {
-    float x;
-    float y;
-    float z;
-} Vector3;
+#include "vector.h"
 
 Vector2 newVector2(int x, int y) {
     Vector2 result;

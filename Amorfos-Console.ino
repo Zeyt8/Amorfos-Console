@@ -1,9 +1,12 @@
-#pragma once
-
 #include "arduino.h"
 #include <stdbool.h>
 
-#include "amorfos.h"
+#include "src/framework/amorfos.h"
+
+Entity** entities;
+unsigned int entityCount;
+Input input;
+float time;
 
 // button north
 ISR(PCINT18_vect) {

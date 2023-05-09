@@ -1,4 +1,4 @@
-#include "entity.h"
+#include "rendering.h"
 
 void render(Entity** entities, int entityCount) {
     for (int i = 0; i < entityCount; i++) {
