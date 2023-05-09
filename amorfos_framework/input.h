@@ -4,6 +4,7 @@
 #define BUTTON_SOUTH 1
 #define BUTTON_EAST 2
 #define BUTTON_WEST 3
+#define BUTTON_JOYSTICK 4
 
 typedef struct Input {
     float joystickX;
@@ -12,6 +13,7 @@ typedef struct Input {
     bool buttonSouth;
     bool buttonEast;
     bool buttonWest;
+    bool buttonJoystick;
 } Input;
 
 /// @brief Called when a button is pressed
