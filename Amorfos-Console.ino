@@ -3,22 +3,19 @@
 
 #include "src/framework/amorfos.h"
 
-using namespace amorfos_internal;
-using namespace amorfos;
-
-Entity** entities;
+amorfos::Entity** entities;
 unsigned int entityCount;
-Input input;
+amorfos::Input input;
 float time;
 
 // button north
 ISR(PCINT18_vect) {
     if (input.buttonNorth) {
         input.buttonNorth = false;
-        OnButtonRelease(BUTTON_NORTH);
+        amorfos::onButtonRelease(BUTTON_NORTH);
     } else {
         input.buttonNorth = true;
-        OnButtonPress(BUTTON_NORTH);
+        amorfos::onButtonPress(BUTTON_NORTH);
     }
 }
 
@@ -26,10 +23,10 @@ ISR(PCINT18_vect) {
 ISR(PCINT19_vect) {
     if (input.buttonEast) {
         input.buttonEast = false;
-        OnButtonRelease(BUTTON_EAST);
+        amorfos::onButtonRelease(BUTTON_EAST);
     } else {
         input.buttonEast = true;
-        OnButtonPress(BUTTON_EAST);
+        amorfos::onButtonPress(BUTTON_EAST);
     }
 }
 
@@ -37,10 +34,10 @@ ISR(PCINT19_vect) {
 ISR(PCINT20_vect) {
     if (input.buttonSouth) {
         input.buttonSouth = false;
-        OnButtonRelease(BUTTON_SOUTH);
+        amorfos::onButtonRelease(BUTTON_SOUTH);
     } else {
         input.buttonSouth = true;
-        OnButtonPress(BUTTON_SOUTH);
+        amorfos::onButtonPress(BUTTON_SOUTH);
     }
 }
 
@@ -48,10 +45,10 @@ ISR(PCINT20_vect) {
 ISR(PCINT21_vect) {
     if (input.buttonWest) {
         input.buttonWest = false;
-        OnButtonRelease(BUTTON_WEST);
+        amorfos::onButtonRelease(BUTTON_WEST);
     } else {
         input.buttonWest = true;
-        OnButtonPress(BUTTON_WEST);
+        amorfos::onButtonPress(BUTTON_WEST);
     }
 }
 
@@ -59,10 +56,10 @@ ISR(PCINT21_vect) {
 ISR(PCINT22_vect) {
     if (input.buttonJoystick) {
         input.buttonJoystick = false;
-        OnButtonRelease(BUTTON_JOYSTICK);
+        amorfos::onButtonRelease(BUTTON_JOYSTICK);
     } else {
         input.buttonJoystick = true;
-        OnButtonPress(BUTTON_JOYSTICK);
+        amorfos::onButtonPress(BUTTON_JOYSTICK);
     }
 }
 
@@ -75,7 +72,7 @@ void setup() {
     // setup joystick input
     DDRD &= ~(1 << PD0);
     DDRD &= ~(1 << PD1);
-    Start();
+    amorfos::start();
 }
 
 void loop() {
@@ -83,8 +80,9 @@ void loop() {
     float oldTime = time;
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
-    Update(deltaTime);
-    render(entities, entityCount);
+    amorfos::update(deltaTime);
+    amorfos_internal::render(entities, entityCount);
+    amorfos_internal::checkCollisions(entities, entityCount);
     // update joystick input
     input.joystickY = (PIND & (1 << PD0)) / 1023.0f;
     input.joystickX = (PIND & (1 << PD1)) / 1023.0f;

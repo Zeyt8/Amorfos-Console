@@ -12,8 +12,12 @@ namespace amorfos
         struct Entity *parent;
         Vector3 color;
         bool isVisible;
+        bool hasCollision;
         void *data;
     } Entity;
+
+    /// @brief Creates a new entity
+    Entity* newEntity();
 
     /// @brief Increases the enitity's position by the given x and y values
     /// @param entity The entity to move

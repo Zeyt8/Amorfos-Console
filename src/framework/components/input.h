@@ -20,8 +20,8 @@ namespace amorfos
 
     /// @brief Called when a button is pressed
     /// @param button Id of the button. Use the BUTTON_* constants
-    extern void OnButtonPress(int button);
+    extern void onButtonPress(int button);
     /// @brief Called when a button is released
     /// @param button Id of the button. Use the BUTTON_* constants
-    extern void OnButtonRelease(int button);
+    extern void onButtonRelease(int button);
 }

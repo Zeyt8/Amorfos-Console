@@ -2,18 +2,31 @@
 
 #include <stdlib.h>
 
-using namespace amorfos;
+amorfos::Entity* amorfos::newEntity() {
+    Entity* entity = (Entity*)malloc(sizeof(Entity));
+    entity->type = 0;
+    entity->position = newVector2(0, 0);
+    entity->children = NULL;
+    entity->childCount = 0;
+    entity->parent = NULL;
+    entity->color = newVector3(1, 1, 1);
+    entity->isVisible = true;
+    entity->hasCollision = true;
+    entity->data = NULL;
 
-void move(Entity* entity, int x, int y) {
+    return entity;
+}
+
+void amorfos::move(Entity* entity, int x, int y) {
     entity->position.x += x;
     entity->position.y += y;
     // move children as well
     for (int i = 0; i < entity->childCount; i++) {
-        amorfos::move(entity->children[i], x, y);
+        move(entity->children[i], x, y);
     }
 }
 
-void setPosition(Entity* entity, int x, int y) {
+void amorfos::setPosition(Entity* entity, int x, int y) {
     entity->position.x = x;
     entity->position.y = y;
     // move children as well, keeping relative position
@@ -22,13 +35,13 @@ void setPosition(Entity* entity, int x, int y) {
     }
 }
 
-void setColor(Entity* entity, float r, float g, float b) {
+void amorfos::setColor(Entity* entity, float r, float g, float b) {
     entity->color.x = r;
     entity->color.y = g;
     entity->color.z = b;
 }
 
-void parent(Entity* entity, Entity* parent) {
+void amorfos::parent(Entity* entity, Entity* parent) {
     entity->parent = parent;
     // if parent is null, remove entity from parent
     if (parent == NULL) {

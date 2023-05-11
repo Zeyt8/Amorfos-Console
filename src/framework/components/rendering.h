@@ -4,5 +4,5 @@
 
 namespace amorfos_internal
 {
-    void render(Entity** entities, int entityCount);
+    void render(amorfos::Entity** entities, int entityCount);
 }

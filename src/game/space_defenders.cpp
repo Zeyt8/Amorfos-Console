@@ -1,17 +1,21 @@
 #include "../framework/amorfos.h"
 
-void Start() {
+void amorfos::start() {
 
 }
 
-void Update(float deltaTime) {
+void amorfos::update(float deltaTime) {
     
 }
 
-void OnButtonPress(int button) {
+void amorfos::onButtonPress(int button) {
 
 }
 
-void OnButtonRelease(int button) {
+void amorfos::onButtonRelease(int button) {
   
+}
+
+void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
+
 }
