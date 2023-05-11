@@ -94,7 +94,7 @@ void loop() {
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
     amorfos::update(deltaTime);
-    amorfos_internal::render(entities, entityCount);
+    amorfos_internal::render(entities, entityCount, &tft);
     amorfos_internal::checkCollisions(entities, entityCount);
     // update joystick input
     input.joystickY = (PIND & (1 << PD0)) / 1023.0f;

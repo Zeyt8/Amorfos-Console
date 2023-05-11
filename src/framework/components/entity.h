@@ -10,7 +10,7 @@ namespace amorfos
         struct Entity **children;
         unsigned int childCount;
         struct Entity *parent;
-        Vector3 color;
+        uint16_t color;
         bool isVisible;
         bool hasCollision;
         void *data;

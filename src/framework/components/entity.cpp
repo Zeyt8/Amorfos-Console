@@ -9,7 +9,7 @@ amorfos::Entity* amorfos::newEntity() {
     entity->children = NULL;
     entity->childCount = 0;
     entity->parent = NULL;
-    entity->color = newVector3(1, 1, 1);
+    entity->color = 1;
     entity->isVisible = true;
     entity->hasCollision = true;
     entity->data = NULL;
@@ -36,9 +36,7 @@ void amorfos::setPosition(Entity* entity, int x, int y) {
 }
 
 void amorfos::setColor(Entity* entity, float r, float g, float b) {
-    entity->color.x = r;
-    entity->color.y = g;
-    entity->color.z = b;
+    entity->color = amorfos::Vector3ToColor(r, g, b);
 }
 
 void amorfos::parent(Entity* entity, Entity* parent) {
