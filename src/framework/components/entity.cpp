@@ -2,12 +2,14 @@
 
 #include <stdlib.h>
 
+using namespace amorfos;
+
 void move(Entity* entity, int x, int y) {
     entity->position.x += x;
     entity->position.y += y;
     // move children as well
     for (int i = 0; i < entity->childCount; i++) {
-        move(entity->children[i], x, y);
+        amorfos::move(entity->children[i], x, y);
     }
 }
 
@@ -16,7 +18,7 @@ void setPosition(Entity* entity, int x, int y) {
     entity->position.y = y;
     // move children as well, keeping relative position
     for (int i = 0; i < entity->childCount; i++) {
-        move(entity->children[i], x - entity->children[i]->position.x, y - entity->children[i]->position.y);
+        amorfos::move(entity->children[i], x - entity->children[i]->position.x, y - entity->children[i]->position.y);
     }
 }
 

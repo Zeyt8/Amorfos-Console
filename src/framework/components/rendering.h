@@ -2,4 +2,7 @@
 
 #include "entity.h"
 
-void render(Entity** entities, int entityCount);
+namespace amorfos_internal
+{
+    void render(Entity** entities, int entityCount);
+}

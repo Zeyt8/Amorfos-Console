@@ -1,5 +1,7 @@
 #include "vector.h"
 
+using namespace amorfos;
+
 Vector2 newVector2(int x, int y) {
     Vector2 result;
     result.x = x;

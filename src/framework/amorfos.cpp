@@ -13,7 +13,7 @@ Entity* CreateEntity() {
     entity->color = newVector3(1, 1, 1);
     entity->isVisible = true;
     // add to list
-    entities = realloc(entities, sizeof(Entity*) * (entityCount + 1));
+    entities = (Entity**)realloc(entities, sizeof(Entity*) * (entityCount + 1));
     entities[entityCount] = entity;
     entityCount++;
     return entity;

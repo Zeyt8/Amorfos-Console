@@ -3,6 +3,9 @@
 
 #include "src/framework/amorfos.h"
 
+using namespace amorfos_internal;
+using namespace amorfos;
+
 Entity** entities;
 unsigned int entityCount;
 Input input;

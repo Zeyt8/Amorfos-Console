@@ -8,6 +8,8 @@
 #include "components/audio.h"
 #include "utils/vector.h"
 
+using namespace amorfos;
+
 extern Entity** entities;
 extern unsigned int entityCount;
 extern Input input;

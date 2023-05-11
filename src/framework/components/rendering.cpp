@@ -1,8 +1,10 @@
 #include "rendering.h"
 
-void render(Entity** entities, int entityCount) {
+using namespace amorfos_internal;
+
+void render(amorfos::Entity** entities, int entityCount) {
     for (int i = 0; i < entityCount; i++) {
-        Entity* entity = entities[i];
+        amorfos::Entity* entity = entities[i];
         if (entity->isVisible) {
             // render entity
         }
