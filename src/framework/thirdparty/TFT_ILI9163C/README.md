@@ -1,140 +1,85 @@
-<b>TFT_ILI9163C</b>
+TFT_ILI9163C
 
-A fast SPI driver for TFT that use Ilitek ILI9163C driver for Arduino's,Teensy's,ESP8266 and more...
+A fast SPI driver for TFT that use Ilitek ILI9163C driver for Arduino's Teensy's and more...
 
-<b>Preview of the 1.0p7</b>, the official release 1.0<br>
-Current version it's a preview, scroll is not complete and other optimizations coming.<br>
-Follow WIKI https://github.com/sumotoy/TFT_ILI9163C/wiki for some help<br>
-<b>This is a massive update, many differences from any other version!</b>, so please read changes, font scheme changed to be compatible with all future libraries (interchangeable), some command deprecated (but there's alternative).<br><br>
-***
-<b>Know Bugs:</b><br>
- - Scroll still not working, will fixed soon.
-<br>
+Current release: 0.9 (old! see below!)
 
-***
+Version 1.0 it's one the corner!<br>
+New version doesn't use the adafruit_GFX and have all the drawing incorporated, this because I've speedup a lot with all processors and uses less resources. <br>
+The very last preview, completely recoded, with GPO Font Rendering an ICON support, also support all the current display around:<br>
+https://github.com/sumotoy/TFT_ILI9163C/tree/Pre-Release-1.0p7<br>
 
-<b>1.0p7 Version Features, Fixes and Updates:</b><br>
-- [ ]  **Bug Fix**  Scroll, should fix for all display's.
-- [x]  **Bug Fix**  Fixed a language typo (horrible, sorry!) grandient is now gradient (thanks Giulio!)
-- [x]  **Added** AVR code fixed, added a parameter in user setting to optimize the size of the code in AVR.
-- [x]  **Added** setCursor can use a keyword called 'CENTER' in x, y or both. It will center text (regardless font size, etc.) es. _setCursor(CENTER,x);_ will center incoming text on x axis
-- [x]  **Added** New font parameter inside Font File. It allows automatical char reassign (es. minus to capital). Useful for include small font file that uses less resources.
-- [x]  **Added** char reassign using scheme inside font file.
-- [x]  **Added** Multiple instances! There's a setting where you can enable multiple instances support.
-However it uses slight more resources (this is why I add a setting). With multiple instances you can have 2 or more display's (even different type) sharing same pins (apart CS) and fonts!
-- [x]  **Added** Multiple instances. Automatically avoid multiple SPI initializations thanks to an internal instances counter.
-- [x]  **Added** getMode().
-- [x]  **Added** Display files now handle any possible type of offset and can correct even upside-down screen. This allow you use any type of display without change a line of code.
-- [x]  **Added** getScrollTop and getScrollBottom.
-- [x]  **Added** Draw Arc Disable (#define _ILI9163C_DRAWARC) in settings. Saves resources if not used.
-- [x]  **Added** drawImage! There's a template & preset for converting images (for lcd-image-converter), See examples!
-- [x]  **Added** drawIcon! Got a lot of requests and now working. There's a template & preset for converting images (for lcd-image-converter), See examples!
-- [x]  **Added** drawImage. Added optional parameters (NONE,TRANSPARENT,REPLACE,BOTH)
-- [x]  **Added** drawIcon now use LGPO. Added transparency (set background as foreground and...voilà), added inverse.
-- [x]  **Fixed** setCursor now works as it should on any rotation
-- [x]  **Fixed** drawCircle(). better rounded.
-- [x]  **Fixed** LGPO Rendering engine issue on background font fixed.
-- [x]  **Fixed** fixed almost all compiling errors with some compilers.
-- [x]  **Fixed** Handle correctly PROGMEM, fixed Avr code side.
-- [x]  **Fixed** LGPO bug with last font lines fixed. Faster rendering as well.
-- [x]  **Updated** LGPO now can used to render any sequence of byte formatted image (also inverted).
-- [x]  **Updated** fillScreen(color1,color2) for create gradient backgrounds. now amazing fast!
-- [x]  **Updated** fillRect(x,y,w,hcolor1,color2) for create gradient rects. now amazing fast!
-- [x]  **Updated** Fonts. Modified template to 2.3.
-- [x]  **Updated** Fonts. Possible change the default font or even avoid completely to save space
-- [x]  **Updated** scroll Up/Down now possible.
-- [x]  **Updated** changeMode() now handle display on/off and works correctly.
-- [x]  **Updated** all examples revised.
-- [x]  **Updated** AVR code faster, user can decide optimizations speed/size
-- [x]  **Updated** ESP8266 code is faster!.
-- [x]  **Updated** Multiple instances fixed with all CPU (but you need separate DC and CS for each display).
-- [x]  **Deprecated** drawColorBitmap(). use drawIcon().
-- [x]  **Deprecated** display(). use changeMode(DISP_ON/DISP_OFF) instead.
-- [x]  **Deprecated** setTextSize(). use setTextScale() instead.
-- [x]  **Deprecated** Adafruit-GFX (never again!).
+Can be used with IDE 1.0.6 (Teensyduino 1.20) or IDE 1.6.x (Teensyduino 1.21b or better)<br>
 
-![ILI9163C](http://i1189.photobucket.com/albums/z437/theamra/libraries/20160419_170251.jpg)
+Notice: In early 2016 appeared in the market a new version of this display with yellow pins and slight smaller.<br>
+This version needs the 'pre-release' 1.0r6 or better that will released sunday 17/4/2016<br>
+
+![ILI9163C](http://i1189.photobucket.com/albums/z437/theamra/github/CIMG6810.jpg)
 
 	Link to a video:
 	
 https://www.youtube.com/watch?v=y5f-VNBxgEk&feature=youtu.be
 
 	Tested with:
-	Teensy 3.0 	-> really fast (1.0p7 confirmed)
-	Teensy 3.1 	-> rocket fast (1.0p7 confirmed)
-	Teensy 3.2 	-> rocket fast (1.0p7 confirmed)
-	Teensy LC  	-> fast (1.0p7 not tested yet)
-	UNO and similar -> fast (1.0p7 not tested yet)
-	DUE 		-> fast (1.0p7 not tested yet)
-	ESP8266		-> pretty fast (1.0p7 confirmed)
+	Teensy 3.0 	-> really fast
+	Teensy 3.1 	-> really fast
+	Teensy LC  	-> still not 100% optimized but fast
+	UNO and similar -> still not 100% optimized but fast
+	DUE 		-> still not 100% optimized but fast
+	ESP8266		-> use the preview 1.0p4 and works
 	
 ==========================
 
 <b>Features:</b>
 	
 	- Very FAST!, expecially with Teensy 3.x where uses hyper fast SPI.
-	- Proprietary LGPO fast font rendering engine.
-	- Tools for font conversion included.
 	- Tons of examples !!!
 	- It uses just 4 wires (2 shared with other devices).
-	- SPI transaction compatible (where supported, otherwise legacy used)
-	- Working with IDE 1.6.8 (or newer)
-	- Working with Arduino's (8 and 32 bit), Teensy 3, Teensy 3.1, Teensy 3.2, Teensy LC, ESP8266
-	- Multiple instances possible
-	- ICON support (with template for LCD Image Converter)
-	- IMAGE support (with template for LCD Image Converter)
+	- Compatible at command level with Adafruit display series so it's easy to adapt existing code.
+	- It uses the standard Adafruit_GFX Library (you need to install). 
+	- SPI transaction compatible (only where supported, actually only Teensy3 but soon more)
+	- Working with IDE 1.0.6, 1.5.8 (or newer), Energia (soon)
+	- Working with Arduino's (8 and 32 bit), Teensy 3, Teensy 3.1 and Teensy LC
+	- Working with Energia supported MCU (not yet but really soon)
+	- A Fast SPI DMA for Nucleo F411RE porting from MasudaNaika https://github.com/MasudaNaika
+	- Current version should work even with ESP8266!
 	
 http://developer.mbed.org/users/peu605/code/TFT_ILI9163C/
 
-<b>Pay Attention to connections!!!!:</b><br>
+<b>Pay Attention to connections!!!!:</b>
 	
-- This display has logic at 3V3 volt so YOU NEED A VOLTAGE CONVERTER if you plan to use with arduino 5V.<br>
-If you try to connect directly you can burn it very fast so PAY ATTENTION!<br>
-- My display works at 3V3 volt and uses 3V3 for logic but LED background has resistor for 5V, hovewer the new one from 2016 has no resistor at all so they needs one and can work at 3v3, try with a 150Ohm first! Before connect display please check this or you will fry the backlight and your TFT will remain dark or change background color forever <br>
-- Library works only in SPI mode by using MOSI,SCLK and a CS pin plus an additional pin for DC (called also A0).<br>
-Optionally you can use the reset pin but you can avoid it by pullup with a resistor (anithing between 4k7 to 10K connected at 3v3 will fine), in that case do not set the rst pin in the instance .<br>
-- Teensy 3 and LC cannot use any pin for CS and DC (or A0) but should be choosen as follow:<br>
- pins:2,6,9 or 10,15 or 20,13 for CS and RS.<br>
-The benchmark.ino example has a routine that can help you to understand if you have choosed the right pin for your Teensy.<br>
-For reset you can use any pin, if you want to save a wire and not use reset, YOU SHOULD CONNECT TO 3V3 OR USE
-A PULLUP RESISTOR (4.7K to 3V3) BUT NOT LEAVE FLOATING!<br>
+	- This display has logic at 3V3 volt so YOU NEED A VOLTAGE CONVERTER if you plan to use with arduino.
+	If you try to connect directly you can burn it very fast so PAY ATTENTION!
+	- My display works at 3V3 volt and uses 3V3 for logic but LED background has resistor for 5V. 
+	Your can be different so carefully check out before connect it.
+	- Library works only in SPI mode by using MOSI,SCLK and a CS pin plus an additional pin for DC (or RS).
+	I've used also the reset pin but you can save it by connect it at 3V3 volt and use the constructor without
+	the reset pin. The initialization routine will automatically use the software reset.
 
-<b>IDE and compilers:</b><br>
+	- Teensy 3 and LC cannot use any pin for CS and RS(DC) but should be choosen as follow:
+	pins:2,6,9 or 10,15 or 20,13 for CS and RS.
+	The benchmark.ino example has a routine that can help you to understand if you have choosed the right pin for your Teensy.
+	For reset you can use any pin, if you want to save a wire and not use reset, YOU SHOULD CONNECT TO 3V3 OR USE
+	A PULLUP RESISTOR (10K to 3V3) BUT NOT LEAVE FLOATING!
+
+<b>Backgrounds:</b>
 	
-I have succesfully tested with Arduino IDE 1.6.9, latest Teensyduino, VisualStudio 2015 with Arduino plugin.
-Potentially any IDE should work but be sure is not too old! Arduino prior 1.5 should be avoided since there's not
-SPI transaction support and lack of many fixes<br>
-
-<b>Fonts:</b><br>
-
-From this version fonts, icons and images can be shared between all my display libraries, working in the xact same way. To convert you own font, follow wiki!<br>
-I provide templates and presets for LCD Image Converter inside _utilities folder.<br>
-
-<b>Backgrounds:</b><br>
+	I got one of those displays from a chinese ebay seller but unfortunatly I cannot get
+	any working library so I decided to work on it. ILI9163C looks pretty similar to other 
+	display driver but it uses it's own commands so it's tricky to work with it unlsess you
+	carefully fight with his gigantic and confused datasheet.
+	My display it's a 1.44"", 128x128 that suppose to substitute Nokia 5110 LCD and here's the 
+	first confusion! Many sellers claim that it's compatible with Nokia 5110 (that use a philips
+	controller) but the only similarity it's the pin names since that this one it's color and
+	have totally different controller that's not compatible. Altrough I discovered that it's not
+	128x128 but 128x160 (!??)... Check links below to see if it's similar to yours.
+	UPDATE:
+	Some chinese seller connected the TFT aligned to bottom, other aligned to top, there's not a sure
+	way to discover witch is yours so better try one of the configurations.
 	
-I got one of those displays from a chinese ebay seller but unfortunatly I cannot get
-any working library so I decided to work on it. ILI9163C looks pretty similar to other 
-display driver but it uses it's own commands so it's tricky to work with it unlsess you
-carefully fight with his gigantic and confused datasheet.
-My display it's a 1.44"", 128x128 that suppose to substitute Nokia 5110 LCD and here's the 
-first confusion! Many sellers claim that it's compatible with Nokia 5110 (that use a philips
-controller) but the only similarity it's the pin names since that this one it's color and
-have totally different controller that's not compatible. Altrough I discovered that it's not
-128x128 but 128x160 with offset (!??)... Check links below to see if it's similar to yours.
-UPDATE:<br>
-Some chinese seller use is own way to connect display to the TFT and since ILI chip is on TFT flat cable is not easy to discover, the library currently support any version at the time I'm writing this but library is able to support any possible future version, if you have any other strain of this display let me know!<br>
-	
-An example of the old RED PCB One:<br>
+http://www.ebay.com/itm/Replace-Nokia-5110-LCD-1-44-Red-Serial-128X128-SPI-Color-TFT-LCD-Display-Module-/141196897388
 
-http://r.ebay.com/H27Lsi
-
-<br>An example of the RED PCB one (2016) with yellow pin (smaller)<br>
-
-http://r.ebay.com/RoKYq9
-
-<br>An example of BLACK PCB one<br>
-
-http://r.ebay.com/tNE6Mg
+http://www.elecrow.com/144-128x-128-tft-lcd-with-spi-interface-p-855.html
 	
 	This TFT it's really cheap but has surprising features since it support very high speed SPI trasfer 
 	(over 40Mhz tested!) and can be used as frame buffer, colors are quite tunable and has a tons of settings.
@@ -142,16 +87,59 @@ http://r.ebay.com/tNE6Mg
 	
 <b>BLACK, RED or ...</b>
 	
-	There's different strain of this display on ebay, I have try to tracking all of them but may missing some 		species! Actually the more popular has a RED pcb and a BLACK pcb that are completely same pcb but mount a 		different display that need some tweaking, in particular RED ones need offset but also some tweak for 			colors, etc. Recently, in 2016, another RED PCB display spreaded around, it has yellow pin instead black, it uses different tft so parameters are different too.In the .h file in the library try to comment out one of the presets:
-	//#include "../_display/TFT_ILI9163C_BLACK_PCB.h"
-	#include "../_display/TFT_ILI9163C_RED_PCB_OLD.h"//the old one
-	//#include "../_display/TFT_ILI9163C_RED_PCB_YPIN.h"//the yellow pin one
-	From version 1.r6 display data it's located inside _display folder, you can easily duplicate one of this files,
-	rename it and include in _settings/TFT_ILI9163C_settings.h.
+	There's different strain of this display on ebay, I have try to tracking all of them but may missing some 		species! Actually the more popular has a RED pcb and a BLACK pcb that are completely same pcb but mount a 		different display that need some tweaking, in particular RED ones need offset but also some tweak for 			colors, etc. In the .h file in the library try to comment out one of the presets:
+	//#define __144_RED_PCB__
+	#define __144_BLACK_PCB__
+	//#define __22_RED_PCB__
+	I have a discussion here where a couple of users claim that the _GRAMHEIGH propriety should be always 128.
+	This is true ONLY if you will never use scroll! Scroll use the entire memory mapped to screen, my RED tag one
+	it's 128x128 but it uses 128x160! If during scroll you have some garbage means that you have not correctly
+	setup the display property:
+	
+	#define _TFTWIDTH  		128//the REAL W resolution of the TFT
+	#define _TFTHEIGHT 		128//the REAL H resolution of the TFT
+	#define _GRAMWIDTH      	128
+	#define _GRAMHEIGH      	160//Heh? Yes! My display uses offset!
+	#define _GRAMSIZE		_GRAMWIDTH * _GRAMHEIGH //
+	#define __COLORSPC		1// 1:GBR - 0:RGB
+	#define __GAMMASET3		//uncomment for another gamma (1,2,3)
+	#define __OFFSET		32//this is the offset of my display, 160 - 128 = 32
+	
+	You can write your own one by adding it in the .h file but let me know so I can add for other users.
+	The OFFSET have sense if the chinese vendor decided to align TFT at bottom lines of the controller.
+	This is nonsense since it will force you to use all the off-screen area as well (visible only when you use
+	scrolling).
+	
+<b>Code Optimizations:</b>
+	
+	The purpose of this library it's SPEED. I have tried to use hardware optimized calls
+	where was possible and results are quite good for most applications.
+	Of course it can be improved so feel free to add suggestions.
+	You will notice that not all display command was added, this because this chip it's really fast
+	but have very poor hardware design, for example, the display on/off command will result in a bright
+	white screen since chip will pullup all display lines (at list my display act as this), a nonsense to me,
+	should be exact the opposite! Apart display there's other commands that act the same so I decided to 
+	don't include to save space.
+	The Teensy 3 side it's almost complete and quite optimized, however Arduino's side can be tweaked a bit
+	by using the same Teensy3 technique (multiple transfer with just one CS call, etc), this will be the 1.0 		version.
 
-<b>The release 1.0 it's standalone and NOT NEED adafruitGFX!</b>
+<b>Needed stuff you have to install first!!!</b>
 
-For the SD you can choose SdFat from greiman or the optimized Paul Stoffregen's SD
+	This library use Adafruit GFX library as all my TFT,OLED and LCD libraries:
+	(Remember to update GFX library often to have more features with this and other library!)
+	
+
+https://github.com/adafruit/Adafruit-GFX-Library
+	
+    	Since Adafruit are quite reluctant to update often I have a 100% compatible one that it's faster and has
+    	more features, faster char rendering, ability to use different fonts etc.
+
+https://github.com/sumotoy/Adafruit-GFX-Library
+
+    	It's 100% compatible with the Adafruit one so don't worry about.
+    	
+    	If you plan to use an SD for the SD example you will need Bill Greyman's SdFat
+    	
 https://github.com/greiman/SdFat
 
     	
@@ -164,63 +152,59 @@ https://github.com/greiman/SdFat
 	- Vcc		-->		+3V3V(!!!!)
 	- Gnd		-->		Gnd
 	- CS		-->		CS pin (3v3 level!)
-	- RST		-->		(optional) connect to a MCU pin or tie to +3V3 or 4k7..10K to 3V3 (do NOT leave float!)
+	- RST		-->		connect to a MCU pin or tie to +3V3 or 10K to 3V3 (do NOT leave float!)
 	- A0		-->		DC or RS pin (3v3 level!)
 	- SDA		-->		Mosi (3v3 level!)
 	- SCK		-->		Sclk (3v3 level!)
 	- LED		-->		Some display need a resistor (see note below)
-
-	TFT side   -------------------- ESP8266  
-	- Vcc		-->		+3V3V(!!!!)
-	- Gnd		-->		Gnd
-	- CS		-->		D0
-	- RST		-->		D2 (optional) if not used tie to +3V3 or 4k7..10K to 3V3 (do NOT leave float!)
-	- A0		-->		D1
-	- SDA		-->		Mosi (D7)
-	- SCK		-->		Sclk (D5)
-	- LED		-->		Some display need a resistor (see note below)
 	
-	Use the last version of ESP8266 or it will probably fail, it works much better
-	with SPI and it's overall better than stable version.
-	
-* Note about led:<br>
-
+* Note about led:
 
 Some display have an internal resistor to limit current, you see on the back of the display, following LED pcb
-trace with your eyes and if you see a resistor (100 Ohm mine) you can connect this line directly to +5V (but try first 3V3!!!).<br>
-But be careful <u>do not try connect to 5V before you check the presence of this resistor on pcb</u>, you can try first by using a resistor of 220 ohm, if the image looks very dark, try 100 and if still very dark, use lower values.<br>
-The yellow pin RED PCB has a weak resistor, do not tie to 5V or you destroy the backlight, try use 100Ohm resistor.<br>
+trace with your eyes and if you see a resistor (100 Ohm mine) you can connect this line directly to +5V.
+But be careful <u>do not try connect to 5V before you check the presence of this resistor on pcb</u>, you can try first by using a resistor of 220 ohm, if the image looks very dark, try 100 and if still very dark, tie directly to 5v.
 
-<b>Just a note about ESP8266:</b><br>
-I've recently discovered that ESP8266 (NodeMCU 0.9 and NodeMCU 1.0 boards at list) has a weak SCLK output that vary from module to module, I really don't know why but voltage goes around 1.7 to 2.5 volt max. This should not be a problem for a SPI device but connecting more devices or some type of chip buffer can be problem! My 74HC125N for example do not work well. It's just a note ut I will investigate in future but please if you connect several SPI devices and not nothing work take count of this and do not apology!<br>
+<b>Utility included:</b>
 
-<b>Utility included:</b><br>
+	Included you will find LCD Image Converter a free utility to convert in code a 24bit image.
+	
+https://github.com/riuson/lcd-image-converter
 
-Included you will find:
- - the template for riuson lcd-image-converter to convert in code a 24bit image.
- - preset for Images.
- - the template for Font Conversion.
- - preset for font conversion (last beta of lcd-image-converter has support for preset).
- - the template for riuson lcd-image-converter to convert in Icons an image.
- - the preset for convert icons.
- - the original library font files in LCD Image Converter format.
-<br>
-Use the last beta of lcd-image-converter!!!<br>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	<br><b>Download lcd-image-converter here:</b><br>
-	http://www.riuson.com/lcd-image-converter/download
-	<br><b>Github page of the developer:</b><br>
-	https://github.com/riuson/lcd-image-converter
-
+	see example bigPicture.ino. 
+	I have included datasheet as well.
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 <b>Special Thanks:</b>
 	
+	Thanks Adafruit for his Adafruit_GFX!
 	Thanks to Paul Stoffregen for his beautiful Teensy3 and high speed SPI magic.
 	Thanks to riuson https://github.com/riuson for kindly provide lcd tool
-	Thanks to Jnmattern & Marek Buriak for drawArc!
-	Thanks to https://github.com/gimpox for his support!
+	
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+<b>Version:</b>
+	
+	0.1a1: First release, compile correctly. Altrough not fully working!
+	0.1a3: Some bugfix, still some addressing problems, partial rotation solved.
+	0.1b1: Beta version! Fully working but still not tested with Arduino and DUE (altrough it compile)
+	0.2b2: Code cleaned and added support for 2.2" RED PCB displays.
+	0.2b4: Bug fixes and added color space support.
+	0.3b1: Complete rework on Teensy SPI based on Paul Stoffregen work
+	SPI transaction,added BLACK TAG 2.2 display
+	0.3b2: Added 24bit image display code and example.
+	0.5:   A lot of changes, preliminary scroll, added sleep and some other command but
+	most important fixed a nasty bug on fillScreen. If you have download any previous
+	version you should upgrade since there was several fixes.
+	0.6: Added subroutines for SD fast load images (mainly for Teensy3)
+	0.6b1: Rolled back clearScreen. Again the datasheet have wrong infos! Grrr
+	0.6b2: scroll completed.
+	0.6b3: ClearScreen v2 fix. Added idle mode.
+	0.7:   Gold release candidate. Fixed initialization (thanks Masuda)
+	0.75:  SPI transactions for Arduino's (beta) please report if troubles (not tested)
+	0.8:   Added compatibility with IDE 1.6.x (Teensyduino 1.21b)
+	0.9:   Big changes, support for Teensy LC, alt pin for Teensy's, more CPU, faster DUE, separate setting file,
+	etc., etc.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 <b> Legal Notes:</b>
 	

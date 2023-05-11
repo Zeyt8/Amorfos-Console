@@ -1,7 +1,18 @@
-#include "arduino.h"
+#include "Arduino.h"
 #include <stdbool.h>
+#include <SPI.h>
+#include "src/framework/thirdparty/TFT_ILI9163C/TFT_ILI9163C.h"
 
 #include "src/framework/amorfos.h"
+
+#define __CS1 	10
+#define __DC 	9
+
+#if defined(TFT_ILI9163C_INSTANCES)
+TFT_ILI9163C tft = TFT_ILI9163C(REDPCB_NEW, __CS1, __DC);
+#else
+TFT_ILI9163C tft = TFT_ILI9163C(__CS1, __DC);
+#endif
 
 amorfos::Entity** entities;
 unsigned int entityCount;
@@ -72,6 +83,8 @@ void setup() {
     // setup joystick input
     DDRD &= ~(1 << PD0);
     DDRD &= ~(1 << PD1);
+    // lcd setup
+    tft.begin();
     amorfos::start();
 }
 
