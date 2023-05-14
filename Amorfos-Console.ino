@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include <stdbool.h>
 #include <SPI.h>
-#include "src/framework/thirdparty/TFT_ILI9163C/TFT_ILI9163C.h"
+#include <TFT_ILI9163C.h>
 
 #include "src/framework/amorfos.h"
 
