@@ -11,10 +11,6 @@
 
 namespace amorfos
 {
-    extern Entity** entities;
-    extern unsigned int entityCount;
-    extern Input input;
-
     /// @brief Called at the start of the game
     void start();
 
@@ -24,8 +20,12 @@ namespace amorfos
 
     /// @brief Create an entity
     /// @return The created entity
-    Entity* CreateEntity();
+    Entity* createEntity();
 
     /// @brief Destroy an entity
-    void DestroyEntity(Entity* entity);
+    void destroyEntity(Entity* entity);
+
+    Entity** getEntities();
+
+    unsigned int getEntityCount();
 }

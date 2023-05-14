@@ -10,5 +10,8 @@ namespace amorfos_internal
 
 namespace amorfos
 {
+    #define LED0 PD0
+    #define LED1 PD1
+
     void setLED(bool on, int led);
 }

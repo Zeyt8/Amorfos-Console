@@ -14,10 +14,8 @@ TFT_ILI9163C tft = TFT_ILI9163C(REDPCB_NEW, __CS1, __DC);
 TFT_ILI9163C tft = TFT_ILI9163C(__CS1, __DC);
 #endif
 
-amorfos::Entity** entities;
-unsigned int entityCount;
 amorfos::Input input;
-float time;
+float time = 0;
 
 // button north
 ISR(PCINT18_vect) {
@@ -81,8 +79,8 @@ void setup() {
     PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21) | (1 << PCINT22);
     sei();
     // setup LED output
-    DDRB |= (1 << PD0);
-    DDRB |= (1 << PD1);
+    DDRB |= (1 << LED0);
+    DDRB |= (1 << LED1);
     // lcd setup
     tft.begin();
     amorfos::start();
@@ -94,8 +92,8 @@ void loop() {
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
     amorfos::update(deltaTime);
-    amorfos_internal::render(entities, entityCount, &tft);
-    amorfos_internal::checkCollisions(entities, entityCount);
+    amorfos_internal::render(amorfos::getEntities(), amorfos::getEntityCount(), &tft);
+    amorfos_internal::checkCollisions(amorfos::getEntities(), amorfos::getEntityCount());
     // update joystick input
     input.joystickY = analogRead(A0) / 1023.0f;
     input.joystickX = analogRead(A1) / 1023.0f;

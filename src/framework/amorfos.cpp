@@ -2,7 +2,10 @@
 
 #include <stdlib.h>
 
-amorfos::Entity* amorfos::CreateEntity() {
+amorfos::Entity** entities;
+unsigned int entityCount;
+
+amorfos::Entity* amorfos::createEntity() {
     // create
     Entity* entity = newEntity();
     // add to list
@@ -12,7 +15,7 @@ amorfos::Entity* amorfos::CreateEntity() {
     return entity;
 }
 
-void amorfos::DestroyEntity(Entity* entity) {
+void amorfos::destroyEntity(Entity* entity) {
     for (int i = 0; i < entityCount; i++) {
         if (entities[i] == entity) {
             entities[i] = entities[entityCount - 1];
@@ -21,4 +24,12 @@ void amorfos::DestroyEntity(Entity* entity) {
             break;
         }
     }
+}
+
+amorfos::Entity** amorfos::getEntities() {
+    return entities;
+}
+
+unsigned int amorfos::getEntityCount() {
+    return entityCount;
 }

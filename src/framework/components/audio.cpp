@@ -1,3 +1,7 @@
 #include "audio.h"
 
-using namespace amorfos;
+#include "Arduino.h"
+
+void amorfos::playSound(unsigned int frequency, unsigned long duration) {
+    tone(BUZZER, frequency, duration);
+}
