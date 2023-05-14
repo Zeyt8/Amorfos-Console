@@ -7,3 +7,8 @@ namespace amorfos_internal
 {
     void render(amorfos::Entity** entities, int entityCount, TFT_ILI9163C* tft);
 }
+
+namespace amorfos
+{
+    void setLED(bool on, int led);
+}

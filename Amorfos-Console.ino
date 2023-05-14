@@ -80,9 +80,9 @@ void setup() {
     PCICR |= (1 << PCIE2);
     PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21) | (1 << PCINT22);
     sei();
-    // setup joystick input
-    DDRD &= ~(1 << PD0);
-    DDRD &= ~(1 << PD1);
+    // setup LED output
+    DDRB |= (1 << PD0);
+    DDRB |= (1 << PD1);
     // lcd setup
     tft.begin();
     amorfos::start();
@@ -97,6 +97,6 @@ void loop() {
     amorfos_internal::render(entities, entityCount, &tft);
     amorfos_internal::checkCollisions(entities, entityCount);
     // update joystick input
-    input.joystickY = (PIND & (1 << PD0)) / 1023.0f;
-    input.joystickX = (PIND & (1 << PD1)) / 1023.0f;
+    input.joystickY = analogRead(A0) / 1023.0f;
+    input.joystickX = analogRead(A1) / 1023.0f;
 }
