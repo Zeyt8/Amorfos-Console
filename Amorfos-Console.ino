@@ -5,14 +5,10 @@
 
 #include "src/framework/amorfos.h"
 
-#define __CS1 	10
-#define __DC 	9
-
-#if defined(TFT_ILI9163C_INSTANCES)
-TFT_ILI9163C tft = TFT_ILI9163C(REDPCB_NEW, __CS1, __DC);
-#else
-TFT_ILI9163C tft = TFT_ILI9163C(__CS1, __DC);
-#endif
+#define __CS 10
+#define __DC 9
+#define __RST 8
+TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC, __RST);
 
 amorfos::Input input;
 float time = 0;
@@ -79,8 +75,8 @@ void setup() {
     PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21) | (1 << PCINT22);
     sei();
     // setup LED output
-    DDRB |= (1 << LED0);
-    DDRB |= (1 << LED1);
+    DDRD |= (1 << LED0);
+    DDRD |= (1 << LED1);
     // lcd setup
     tft.begin();
     amorfos::start();

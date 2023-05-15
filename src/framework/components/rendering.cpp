@@ -16,18 +16,18 @@ void amorfos::setLED(bool on, int led)
 {
     if (led == 0) {
         if (on) {
-            PORTB |= (1 << LED0);
+            PORTD |= (1 << LED0);
         }
         else {
-            PORTB &= ~(1 << LED1);
+            PORTD &= ~(1 << LED0);
         }
     }
     else if (led == 1) {
         if (on) {
-            PORTB |= (1 << LED0);
+            PORTD |= (1 << LED1);
         }
         else {
-            PORTB &= ~(1 << LED1);
+            PORTD &= ~(1 << LED1);
         }
     }
 }
