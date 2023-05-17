@@ -2,19 +2,23 @@
 
 namespace amorfos
 {
-    #define BUTTON_NORTH 0
-    #define BUTTON_SOUTH 1
-    #define BUTTON_EAST 2
+    #define BUTTON_NORTH 2
     #define BUTTON_WEST 3
-    #define BUTTON_JOYSTICK 4
+    #define BUTTON_SOUTH 4
+    #define BUTTON_EAST 5
+    #define BUTTON_START 6
+    #define BUTTON_SELECT 7
+    #define BUTTON_JOYSTICK 8
 
     typedef struct Input {
         float joystickX;
         float joystickY;
         bool buttonNorth;
+        bool buttonWest;
         bool buttonSouth;
         bool buttonEast;
-        bool buttonWest;
+        bool buttonStart;
+        bool buttonSelect;
         bool buttonJoystick;
     } Input;
 
