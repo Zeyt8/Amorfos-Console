@@ -22,8 +22,4 @@ namespace amorfos
     Vector2 addVector2(Vector2 a, Vector2 b);
 
     Vector3 addVector3(Vector3 a, Vector3 b);
-
-    uint16_t Vector3ToColor(Vector3 vector);
-
-    uint16_t Vector3ToColor(float r, float g, float b);
 }

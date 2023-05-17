@@ -1,14 +1,11 @@
 #include "Arduino.h"
 #include <stdbool.h>
 #include <SPI.h>
-#include <TFT_ILI9163C.h>
+#include "Ucglib.h"
 
 #include "src/framework/amorfos.h"
 
-#define __CS 10
-#define __DC 9
-#define __RST 8
-TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC, __RST);
+Ucglib_ILI9163_18x128x128_SWSPI ucg(/*sclk=*/ 13, /*data=*/ 11, /*cd=*/ 9, /*cs=*/ 10, /*reset=*/ 8);
 
 amorfos::Input input;
 float time = 0;
@@ -78,7 +75,10 @@ void setup() {
     DDRD |= (1 << LED0);
     DDRD |= (1 << LED1);
     // lcd setup
-    tft.begin();
+    ucg.begin(UCG_FONT_MODE_SOLID);
+    ucg.setClipRange(0, -32, 128, 128);
+    ucg.setFont(ucg_font_ncenR12_tr);
+    ucg.clearScreen();
     amorfos::start();
 }
 
@@ -88,7 +88,7 @@ void loop() {
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
     amorfos::update(deltaTime);
-    amorfos_internal::render(amorfos::getEntities(), amorfos::getEntityCount(), &tft);
+    amorfos_internal::render(amorfos::getEntities(), amorfos::getEntityCount(), &ucg);
     amorfos_internal::checkCollisions(amorfos::getEntities(), amorfos::getEntityCount());
     // update joystick input
     input.joystickY = analogRead(A0) / 1023.0f;

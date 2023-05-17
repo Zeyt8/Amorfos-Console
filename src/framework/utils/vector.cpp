@@ -29,19 +29,3 @@ amorfos::Vector3 amorfos::addVector3(Vector3 a, Vector3 b) {
     result.z = a.z + b.z;
     return result;
 }
-
-uint16_t amorfos::Vector3ToColor(Vector3 vector) {
-    uint16_t result = 0;
-    result |= (uint16_t)vector.x << 11;
-    result |= (uint16_t)vector.y << 5;
-    result |= (uint16_t)vector.z;
-    return result;
-}
-
-uint16_t amorfos::Vector3ToColor(float r, float g, float b) {
-    uint16_t result = 0;
-    result |= (uint16_t)r << 11;
-    result |= (uint16_t)g << 5;
-    result |= (uint16_t)b;
-    return result;
-}

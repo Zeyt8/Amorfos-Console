@@ -2,12 +2,13 @@
 
 #include "Arduino.h"
 
-void amorfos_internal::render(amorfos::Entity** entities, int entityCount, TFT_ILI9163C* tft) {
-    tft->clearScreen();
+void amorfos_internal::render(amorfos::Entity** entities, int entityCount, Ucglib_ILI9163_18x128x128_SWSPI* ucg) {
+    ucg->clearScreen();
     for (int i = 0; i < entityCount; i++) {
         amorfos::Entity* entity = entities[i];
         if (entity->isVisible) {
-            tft->drawPixel(entity->position.x, entity->position.y, entity->color);
+            ucg->setColor(entity->color.x, entity->color.y, entity->color.z);
+            ucg->drawPixel(entity->position.x, entity->position.y);
         }
     }
 }
