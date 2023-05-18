@@ -5,7 +5,7 @@
 
 #include "src/framework/amorfos.h"
 
-Ucglib_ILI9163_18x128x128_SWSPI ucg(/*sclk=*/ 13, /*data=*/ 12, /*cd=*/ 10, /*cs=*/ 11, /*reset=*/ 9);
+Ucglib_ILI9163_18x128x128_SWSPI ucg(/*sclk=*/ 10, /*data=*/ 11, /*cd=*/ 12, /*cs=*/ 13, /*reset=*/ 9);
 
 amorfos::Input input;
 float time = 0;

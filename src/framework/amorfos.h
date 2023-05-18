@@ -14,7 +14,7 @@ namespace amorfos
     /// @brief Called at the start of the game
     void start();
 
-    /// @brief The main game loop. Delta time is the time since the last frame
+    /// @brief The main game loop. Delta time is the time since the last time the loop was called.
     /// @param deltaTime 
     void update(float deltaTime);
 

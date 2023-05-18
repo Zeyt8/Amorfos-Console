@@ -5,15 +5,15 @@
 namespace amorfos
 {
     typedef struct Entity {
-        unsigned int type;
-        Vector2 position;
-        struct Entity **children;
-        unsigned int childCount;
-        struct Entity *parent;
-        Vector3 color;
-        bool isVisible;
-        bool hasCollision;
-        void *data;
+        unsigned int type;  // a tag you can assign to the object to identify its type
+        Vector2 position;   // the position of the object
+        struct Entity **children;   // the children of the object
+        unsigned int childCount;    // the number of children the object has
+        struct Entity *parent;  // the parent of the object
+        Vector3 color;  // the color of the object
+        bool isVisible; // whether the object is visible or not
+        bool hasCollision;  // whether the object has collision or not
+        void *data; // a pointer to any data you want to attach to the object
     } Entity;
 
     /// @brief Creates a new entity
