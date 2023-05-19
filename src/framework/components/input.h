@@ -2,10 +2,10 @@
 
 namespace amorfos
 {
-    #define BUTTON_NORTH 2
-    #define BUTTON_WEST 3
-    #define BUTTON_SOUTH 4
-    #define BUTTON_EAST 5
+    #define BUTTON_TOP 2
+    #define BUTTON_RIGHT 3
+    #define BUTTON_BOTTOM 4
+    #define BUTTON_LEFT 5
     #define BUTTON_START 6
     #define BUTTON_SELECT 7
     #define BUTTON_JOYSTICK 8

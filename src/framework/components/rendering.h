@@ -10,8 +10,8 @@ namespace amorfos_internal
 
 namespace amorfos
 {
-    #define LED0 PD0
-    #define LED1 PD1
+    #define LED0 PD1
+    #define LED1 PD0
 
     /// @brief Sets the state of an LED
     /// @param on The state of the LED

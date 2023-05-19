@@ -11,37 +11,37 @@ amorfos::Input input;
 float time = 0;
 
 ISR(PCINT2_vect) {
-    if ((PIND << BUTTON_NORTH) == 0) {
+    if ((PIND << BUTTON_TOP) == 0) {
         if (input.buttonNorth) {
             input.buttonNorth = false;
-            amorfos::onButtonRelease(BUTTON_NORTH);
+            amorfos::onButtonRelease(BUTTON_TOP);
         } else {
             input.buttonNorth = true;
-            amorfos::onButtonPress(BUTTON_NORTH);
+            amorfos::onButtonPress(BUTTON_TOP);
         }
-    } else if ((PIND << BUTTON_WEST) == 0) {
+    } else if ((PIND << BUTTON_RIGHT) == 0) {
         if (input.buttonWest) {
             input.buttonWest = false;
-            amorfos::onButtonRelease(BUTTON_WEST);
+            amorfos::onButtonRelease(BUTTON_RIGHT);
         } else {
             input.buttonWest = true;
-            amorfos::onButtonPress(BUTTON_WEST);
+            amorfos::onButtonPress(BUTTON_RIGHT);
         }
-    } else if ((PIND << BUTTON_SOUTH) == 0) {
+    } else if ((PIND << BUTTON_BOTTOM) == 0) {
         if (input.buttonSouth) {
             input.buttonSouth = false;
-            amorfos::onButtonRelease(BUTTON_SOUTH);
+            amorfos::onButtonRelease(BUTTON_BOTTOM);
         } else {
             input.buttonSouth = true;
-            amorfos::onButtonPress(BUTTON_SOUTH);
+            amorfos::onButtonPress(BUTTON_BOTTOM);
         }
-    } else if ((PIND << BUTTON_EAST) == 0) {
+    } else if ((PIND << BUTTON_LEFT) == 0) {
         if (input.buttonEast) {
             input.buttonEast = false;
-            amorfos::onButtonRelease(BUTTON_EAST);
+            amorfos::onButtonRelease(BUTTON_LEFT);
         } else {
             input.buttonEast = true;
-            amorfos::onButtonPress(BUTTON_EAST);
+            amorfos::onButtonPress(BUTTON_LEFT);
         }
     } else if ((PIND << BUTTON_START) == 0) {
         if (input.buttonStart) {

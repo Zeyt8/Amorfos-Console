@@ -2,17 +2,17 @@
 
 #include <stdlib.h>
 
-amorfos::Entity* amorfos::newEntity() {
+amorfos::Entity* amorfos::newEntity(int type, Vector2 position, Vector3 color, bool isVisible, bool hasCollision, void* data) {
     Entity* entity = (Entity*)malloc(sizeof(Entity));
-    entity->type = 0;
-    entity->position = newVector2(0, 0);
+    entity->type = type;
+    entity->position = position;
     entity->children = NULL;
     entity->childCount = 0;
     entity->parent = NULL;
-    entity->color = newVector3(255, 255, 255);
-    entity->isVisible = true;
-    entity->hasCollision = true;
-    entity->data = NULL;
+    entity->color = color;
+    entity->isVisible = isVisible;
+    entity->hasCollision = hasCollision;
+    entity->data = data;
 
     return entity;
 }

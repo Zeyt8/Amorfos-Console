@@ -17,7 +17,7 @@ namespace amorfos
     } Entity;
 
     /// @brief Creates a new entity
-    Entity* newEntity();
+    Entity* newEntity(int type=0, Vector2 position=newVector2(0, 0), Vector3 color=newVector3(1, 1, 1), bool isVisible=true, bool hasCollision=false, void* data=nullptr);
 
     /// @brief Increases the enitity's position by the given x and y values
     /// @param entity The entity to move

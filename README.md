@@ -4,9 +4,9 @@ This is a console I made as a project for university. It has a joystick and 4 bu
 
 In this repo you can find a framework I made to make games for this console. Games are compiled using Arduino IDE. You can put the games on an SD card to be loaded at start.
 
-The framework can be found in src/framework.
+The framework can be found in src/framework. It uses C++, but since the console isn't very powerful, it doesn't use classes. Instead it uses structs and functions, like in C.
 
-Game examples and a template for starting a new project can be found in src/game
+Game examples and a template for starting a new project can be found in src/game.
 
 ## Amorfos Framework
 
@@ -57,7 +57,7 @@ The framework is based on Entities. For short, an Entity is an object in a game 
 
 To create and destroy objects use the following functions from amorfos.h:
 	
-	Entity* createEntity();
+	Entity* createEntity(int type=0, Vector2 position=newVector2(0, 0), Vector3 color=newVector3(1, 1, 1), bool isVisible=true, bool hasCollision=false, void* data=NULL);
 	void destroyEntity(Entity* entity);
 	
 These functions also take care of adding or removing the object from the scene. Using newEntity will only allocate an Entity and set default values, but will not add it to the scene.
