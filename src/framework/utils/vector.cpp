@@ -1,13 +1,13 @@
 #include "vector.h"
 
-amorfos::Vector2 amorfos::newVector2(int x, int y) {
+amorfos::Vector2 amorfos::newVector2(float x, float y) {
     Vector2 result;
     result.x = x;
     result.y = y;
     return result;
 }
 
-amorfos::Vector3 amorfos::newVector3(int x, int y, int z) {
+amorfos::Vector3 amorfos::newVector3(float x, float y, float z) {
     Vector3 result;
     result.x = x;
     result.y = y;

@@ -15,9 +15,9 @@ namespace amorfos
         float z;
     } Vector3;
 
-    Vector2 newVector2(int x, int y);
+    Vector2 newVector2(float x, float y);
 
-    Vector3 newVector3(int x, int y, int z);
+    Vector3 newVector3(float x, float y, float z);
 
     Vector2 addVector2(Vector2 a, Vector2 b);
 

@@ -1,4 +1,4 @@
-#if 1 //Remove this or change it to 1 to use. Also remove the #endif at the bottom of the file.
+#if 1 // Remove this or change it to 1 to use. Also remove the #endif at the bottom of the file.
 // This is needed because there are multiple game projects in the repo and they are all implementing the functions from amorfos.h.
 
 #include "../../framework/amorfos.h"
@@ -17,7 +17,10 @@ uint8_t playerHealth = 2;
 uint8_t maxBullets = 3;
 uint8_t bulletCount = 0;
 bool needToReload = false;
-float reloadTime = 1.0f;
+int reloadTicks = 2;
+float tickTimer = 1.0f;
+int ticksForEnemyVertical = 5;
+int ticksForSpawnEnemy = 10;
 
 void amorfos::start() {
     player = createEntity(EntityType::PLAYER, newVector2(0, 0), newVector3(1, 0, 0), true, true, NULL);
@@ -25,14 +28,42 @@ void amorfos::start() {
     setLED(true, 1);
 }
 
-void amorfos::update(float deltaTime) {
+static void onTick()
+{
     if (needToReload) {
-        reloadTime -= deltaTime;
-        if (reloadTime <= 0) {
+        reloadTicks--;
+        if (reloadTicks <= 0) {
             bulletCount = maxBullets;
-            reloadTime = 1.0f;
+            reloadTicks = 2;
             needToReload = false;
         }
+    }
+    ticksForEnemyVertical--;
+    for (int i = 0; i < entityCount; i++) {
+        if (entities[i]->type == EntityType::ENEMY) {
+            entities[i]->position.x += 1;
+            if (ticksForEnemyVertical <= 0) {
+                entities[i]->position.y -= 1;
+                ticksForEnemyVertical = 5;
+            }
+        }
+        else if (entities[i]->type == EntityType::BULLET) {
+            entities[i]->position.y += 1;
+        }
+    }
+    ticksForSpawnEnemy--;
+    if (ticksForSpawnEnemy <= 0) {
+        for (int i = 0; i < 5; i++) {
+            createEntity(EntityType::ENEMY, newVector2(i * 3, 0), newVector3(0, 1, 0), true, true, NULL);
+        }
+    }
+}
+
+void amorfos::update(float deltaTime) {
+    tickTimer -= deltaTime;
+    if (tickTimer <= 0) {
+        tickTimer = 1.0f;
+        onTick();
     }
 }
 
@@ -52,6 +83,13 @@ void amorfos::onButtonRelease(int button) {
   
 }
 
+static void gameOver() {
+    for (int i = entityCount; i >= 0; i--) {
+        destroyEntity(entities[i]);
+    }
+    start();
+}
+
 void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
     if (entity1->type == EntityType::PLAYER && entity2->type == EntityType::ENEMY) {
         playerHealth--;
@@ -64,6 +102,7 @@ void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
                 setLED(false, LED0);
             }
             // game over
+            gameOver();
         }
     }
     else if (entity1->type == EntityType::BULLET && entity2->type == EntityType::ENEMY) {
@@ -72,4 +111,4 @@ void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
     }
 }
 
-#endif // Also remove this to use
+#endif // If you removed the #if 1 at the top of the file, remove this too.

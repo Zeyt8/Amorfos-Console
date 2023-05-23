@@ -11,6 +11,9 @@
 
 namespace amorfos
 {
+    inline amorfos::Entity** entities;
+    inline unsigned int entityCount;
+
     /// @brief Called at the start of the game
     void start();
 
@@ -24,8 +27,4 @@ namespace amorfos
 
     /// @brief Destroy an entity
     void destroyEntity(Entity* entity);
-
-    Entity** getEntities();
-
-    unsigned int getEntityCount();
 }

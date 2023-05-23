@@ -9,8 +9,11 @@ Ucglib_ILI9163_18x128x128_SWSPI ucg(/*sclk=*/ 10, /*data=*/ 11, /*cd=*/ 12, /*cs
 
 amorfos::Input input;
 float time = 0;
+float debouncing = 0;
 
 ISR(PCINT2_vect) {
+    if (millis() - debouncing < 100) return;
+    debouncing = millis();
     if ((PIND << BUTTON_TOP) == 0) {
         if (input.buttonNorth) {
             input.buttonNorth = false;
@@ -63,6 +66,8 @@ ISR(PCINT2_vect) {
 }
 
 ISR(PCINT0_vect) {
+    if (millis() - debouncing < 100) return;
+    debouncing = millis();
     if ((PINB << (BUTTON_JOYSTICK - 9)) == 0) {
         if (input.buttonJoystick) {
             input.buttonJoystick = false;
@@ -98,8 +103,8 @@ void loop() {
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
     amorfos::update(deltaTime);
-    amorfos_internal::render(amorfos::getEntities(), amorfos::getEntityCount(), &ucg);
-    amorfos_internal::checkCollisions(amorfos::getEntities(), amorfos::getEntityCount());
+    amorfos_internal::render(amorfos::entities, amorfos::entityCount, &ucg);
+    amorfos_internal::checkCollisions(amorfos::entities, amorfos::entityCount);
     // update joystick input
     input.joystickX = analogRead(A0) / 1023.0f;
     input.joystickY = analogRead(A1) / 1023.0f;

@@ -2,9 +2,6 @@
 
 #include <stdlib.h>
 
-amorfos::Entity** entities;
-unsigned int entityCount;
-
 amorfos::Entity* amorfos::createEntity(int type, Vector2 position, Vector3 color, bool isVisible, bool hasCollision, void* data) {
     // create
     Entity* entity = newEntity(type, position, color, isVisible, hasCollision, data);
@@ -24,12 +21,4 @@ void amorfos::destroyEntity(Entity* entity) {
             break;
         }
     }
-}
-
-amorfos::Entity** amorfos::getEntities() {
-    return entities;
-}
-
-unsigned int amorfos::getEntityCount() {
-    return entityCount;
 }

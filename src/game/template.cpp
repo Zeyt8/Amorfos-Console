@@ -1,4 +1,4 @@
-#if 0 //Remove this or change it to 1 to use. Also remove the #endif at the bottom of the file.
+#if 0 // Remove this or change it to 1 to use. Also remove the #endif at the bottom of the file.
 // This is needed because there are multiple game projects in the repo and they are all implementing the functions from amorfos.h.
 
 #include "../framework/amorfos.h"
@@ -23,4 +23,4 @@ void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
 
 }
 
-#endif // Also remove this to use
+#endif // If you removed the #if 1 at the top of the file, remove this too.
