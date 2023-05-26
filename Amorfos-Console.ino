@@ -5,7 +5,7 @@
 
 #include "src/framework/amorfos.h"
 
-Ucglib_ILI9163_18x128x128_SWSPI ucg(/*sclk=*/ 10, /*data=*/ 11, /*cd=*/ 12, /*cs=*/ 13, /*reset=*/ 9);
+Ucglib_ILI9341_18x240x320_HWSPI ucg(/*cd=*/ 9 , /*cs=*/ 10, /*reset=*/ 8);
 
 amorfos::Input input;
 float time = 0;
@@ -80,6 +80,8 @@ ISR(PCINT0_vect) {
 }
 
 void setup() {
+    Serial.begin(9600);
+    delay(1000);
     cli();
     // setup input
     // setup intrerrupts for buttons
@@ -88,12 +90,11 @@ void setup() {
     // setup LED output
     DDRD |= (1 << LED0);
     DDRD |= (1 << LED1);
+    sei();
     // lcd setup
-    ucg.begin(UCG_FONT_MODE_SOLID);
-    ucg.setClipRange(0, -32, 128, 128);
+    ucg.begin(UCG_FONT_MODE_TRANSPARENT);
     ucg.setFont(ucg_font_ncenR12_tr);
     ucg.clearScreen();
-    sei();
     amorfos::start();
 }
 

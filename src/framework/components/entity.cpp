@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-amorfos::Entity* amorfos::newEntity(int type, Vector2 position, Vector3 color, bool isVisible, bool hasCollision, void* data) {
+amorfos::Entity* amorfos::newEntity(int type, Vector2<int> position, Vector3<int> color, bool isVisible, bool hasCollision, void* data) {
     Entity* entity = (Entity*)malloc(sizeof(Entity));
     entity->type = type;
     entity->position = position;
@@ -27,16 +27,17 @@ void amorfos::move(Entity* entity, int x, int y) {
 }
 
 void amorfos::setPosition(Entity* entity, int x, int y) {
+    // move children, keeping relative position
+    for (int i = 0; i < entity->childCount; i++) {
+        amorfos::move(entity->children[i], x - entity->position.x, y - entity->position.y);
+    }
+    // move object
     entity->position.x = x;
     entity->position.y = y;
-    // move children as well, keeping relative position
-    for (int i = 0; i < entity->childCount; i++) {
-        amorfos::move(entity->children[i], x - entity->children[i]->position.x, y - entity->children[i]->position.y);
-    }
 }
 
-void amorfos::setColor(Entity* entity, float r, float g, float b) {
-    entity->color = newVector3(r, g, b);
+void amorfos::setColor(Entity* entity, int r, int g, int b) {
+    entity->color = newVector3<int>(r, g, b);
 }
 
 void amorfos::parent(Entity* entity, Entity* parent) {

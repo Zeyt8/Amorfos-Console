@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-amorfos::Entity* amorfos::createEntity(int type, Vector2 position, Vector3 color, bool isVisible, bool hasCollision, void* data) {
+amorfos::Entity* amorfos::createEntity(int type, Vector2<int> position, Vector3<int> color, bool isVisible, bool hasCollision, void* data) {
     // create
     Entity* entity = newEntity(type, position, color, isVisible, hasCollision, data);
     // add to list

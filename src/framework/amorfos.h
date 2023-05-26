@@ -23,7 +23,7 @@ namespace amorfos
 
     /// @brief Create an entity
     /// @return The created entity
-    Entity* createEntity(int type=0, Vector2 position=newVector2(0, 0), Vector3 color=newVector3(1, 1, 1), bool isVisible=true, bool hasCollision=false, void* data=nullptr);
+    Entity* createEntity(int type=0, Vector2<int> position=newVector2(0, 0), Vector3<int> color=newVector3(1, 1, 1), bool isVisible=true, bool hasCollision=false, void* data=nullptr);
 
     /// @brief Destroy an entity
     void destroyEntity(Entity* entity);

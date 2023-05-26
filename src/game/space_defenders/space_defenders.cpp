@@ -22,8 +22,19 @@ float tickTimer = 1.0f;
 int ticksForEnemyVertical = 5;
 int ticksForSpawnEnemy = 10;
 
+static void createPlayer() {
+    player = createEntity(EntityType::PLAYER, newVector2(0, 0), newVector3(255, 0, 0), true, true, NULL);
+    Entity* rightWing = createEntity(EntityType::PLAYER, newVector2(1, 0), newVector3(255, 0, 0), true, true, NULL);
+    parent(rightWing, player);
+    Entity* leftWing = createEntity(EntityType::PLAYER, newVector2(-1, 0), newVector3(255, 0, 0), true, true, NULL);
+    parent(leftWing, player);
+    Entity* front = createEntity(EntityType::PLAYER, newVector2(0, 1), newVector3(255, 0, 0), true, true, NULL);
+    parent(front, player);
+}
+
 void amorfos::start() {
-    player = createEntity(EntityType::PLAYER, newVector2(0, 0), newVector3(1, 0, 0), true, true, NULL);
+    createPlayer();
+    setPosition(player, LCD_WIDTH / 2, LCD_HEIGHT / 2);
     setLED(true, 0);
     setLED(true, 1);
 }
@@ -54,23 +65,23 @@ static void onTick()
     ticksForSpawnEnemy--;
     if (ticksForSpawnEnemy <= 0) {
         for (int i = 0; i < 5; i++) {
-            createEntity(EntityType::ENEMY, newVector2(i * 3, 0), newVector3(0, 1, 0), true, true, NULL);
+            createEntity(EntityType::ENEMY, newVector2(i * 3, 0), newVector3(0, 255, 0), true, true, NULL);
         }
     }
 }
 
 void amorfos::update(float deltaTime) {
-    tickTimer -= deltaTime;
+    /*tickTimer -= deltaTime;
     if (tickTimer <= 0) {
         tickTimer = 1.0f;
         onTick();
-    }
+    }*/
 }
 
 void amorfos::onButtonPress(int button) {
     if (button == BUTTON_TOP) {
         if (bulletCount > 0) {
-            createEntity(EntityType::BULLET, newVector2(player->position.x, player->position.y), newVector3(1, 1, 0), true, true, NULL);
+            createEntity(EntityType::BULLET, newVector2(player->position.x, player->position.y), newVector3(255, 255, 0), true, true, NULL);
             bulletCount--;
         }
         else {
