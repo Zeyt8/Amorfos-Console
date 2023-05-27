@@ -14,6 +14,7 @@ namespace amorfos
         bool isVisible; // whether the object is visible or not
         bool hasCollision;  // whether the object has collision or not
         void *data; // a pointer to any data you want to attach to the object
+        bool isDestroyed;   // DO NOT USE! whether the object is destroyed or not
     } Entity;
 
     /// @brief Creates a new entity

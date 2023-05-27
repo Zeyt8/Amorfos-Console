@@ -13,12 +13,5 @@ amorfos::Entity* amorfos::createEntity(int type, Vector2<int> position, Vector3<
 }
 
 void amorfos::destroyEntity(Entity* entity) {
-    for (int i = 0; i < entityCount; i++) {
-        if (entities[i] == entity) {
-            entities[i] = entities[entityCount - 1];
-            entityCount--;
-            free(entity);
-            break;
-        }
-    }
+    entity->isDestroyed = true;
 }

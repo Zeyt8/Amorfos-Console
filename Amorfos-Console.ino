@@ -106,6 +106,14 @@ void loop() {
     amorfos::update(deltaTime);
     amorfos_internal::render(amorfos::entities, amorfos::entityCount, &ucg);
     amorfos_internal::checkCollisions(amorfos::entities, amorfos::entityCount);
+    // destroy required objects
+    for (int i = entityCount; i >= 0; i--) {
+        if (entities[i].isDestroyed) {
+            entities[i] = entities[entityCount - 1];
+            entityCount--;
+            free(entities[entityCount]);
+        }
+    }
     // update joystick input
     input.joystickX = analogRead(A0) / 1023.0f;
     input.joystickY = analogRead(A1) / 1023.0f;

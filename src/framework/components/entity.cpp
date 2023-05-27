@@ -13,6 +13,7 @@ amorfos::Entity* amorfos::newEntity(int type, Vector2<int> position, Vector3<int
     entity->isVisible = isVisible;
     entity->hasCollision = hasCollision;
     entity->data = data;
+    entity->isDestroyed = false;
 
     return entity;
 }
