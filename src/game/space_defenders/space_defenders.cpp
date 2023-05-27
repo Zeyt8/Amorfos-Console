@@ -87,6 +87,9 @@ static void onTick()
         else if (entities[i]->type == EntityType::BULLET) {
             move(entities[i], 0, 2);
         }
+        else if (entities[i]->type == EntityType::PLAYER) {
+            move(entities[i], input.joystickX, input.joystickY);
+        }   
     }
     if (ticksForEnemyVertical <= 0) {
         ticksForEnemyVertical = 7;

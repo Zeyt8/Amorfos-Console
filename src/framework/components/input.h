@@ -22,6 +22,8 @@ namespace amorfos
         bool buttonJoystick;
     } Input;
 
+    volatile inline Input input;
+
     /// @brief Called when a button is pressed
     /// @param button Id of the button. Use the BUTTON_* constants
     extern void onButtonPress(int button);

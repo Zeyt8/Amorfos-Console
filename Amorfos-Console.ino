@@ -5,9 +5,11 @@
 
 #include "src/framework/amorfos.h"
 
+using namespace amorfos;
+using namespace amorfos_internal;
+
 Ucglib_ILI9341_18x240x320_HWSPI ucg(/*cd=*/ 9 , /*cs=*/ 10, /*reset=*/ 12);
 
-volatile amorfos::Input input;
 float time = 0;
 volatile int debouncing = 0;
 
@@ -17,50 +19,50 @@ ISR(PCINT2_vect) {
     if ((PIND & (1 << BUTTON_TOP)) == 0) {
         if (input.buttonNorth) {
             input.buttonNorth = false;
-            amorfos::onButtonRelease(BUTTON_TOP);
+            onButtonRelease(BUTTON_TOP);
         } else {
             input.buttonNorth = true;
-            amorfos::onButtonPress(BUTTON_TOP);
+            onButtonPress(BUTTON_TOP);
         }
     } else if ((PIND & (1 << BUTTON_RIGHT)) == 0) {
         if (input.buttonWest) {
             input.buttonWest = false;
-            amorfos::onButtonRelease(BUTTON_RIGHT);
+            onButtonRelease(BUTTON_RIGHT);
         } else {
             input.buttonWest = true;
-            amorfos::onButtonPress(BUTTON_RIGHT);
+            onButtonPress(BUTTON_RIGHT);
         }
     } else if ((PIND & (1 << BUTTON_BOTTOM)) == 0) {
         if (input.buttonSouth) {
             input.buttonSouth = false;
-            amorfos::onButtonRelease(BUTTON_BOTTOM);
+            onButtonRelease(BUTTON_BOTTOM);
         } else {
             input.buttonSouth = true;
-            amorfos::onButtonPress(BUTTON_BOTTOM);
+            onButtonPress(BUTTON_BOTTOM);
         }
     } else if ((PIND & (1 << BUTTON_LEFT)) == 0) {
         if (input.buttonEast) {
             input.buttonEast = false;
-            amorfos::onButtonRelease(BUTTON_LEFT);
+            onButtonRelease(BUTTON_LEFT);
         } else {
             input.buttonEast = true;
-            amorfos::onButtonPress(BUTTON_LEFT);
+            onButtonPress(BUTTON_LEFT);
         }
     }/* else if ((PIND & (1 << BUTTON_START)) == 0) {
         if (input.buttonStart) {
             input.buttonStart = false;
-            amorfos::onButtonRelease(BUTTON_START);
+            onButtonRelease(BUTTON_START);
         } else {
             input.buttonStart = true;
-            amorfos::onButtonPress(BUTTON_START);
+            onButtonPress(BUTTON_START);
         }
     } else if ((PIND & (1 << BUTTON_SELECT)) == 0) {
         if (input.buttonSelect) {
             input.buttonSelect = false;
-            amorfos::onButtonRelease(BUTTON_SELECT);
+            onButtonRelease(BUTTON_SELECT);
         } else {
             input.buttonSelect = true;
-            amorfos::onButtonPress(BUTTON_SELECT);
+            onButtonPress(BUTTON_SELECT);
         }
     }*/
 }
@@ -71,10 +73,10 @@ ISR(PCINT0_vect) {
     if ((PINB & (1 << (BUTTON_JOYSTICK - 8))) == 0) {
         if (input.buttonJoystick) {
             input.buttonJoystick = false;
-            amorfos::onButtonRelease(BUTTON_JOYSTICK);
+            onButtonRelease(BUTTON_JOYSTICK);
         } else {
             input.buttonJoystick = true;
-            amorfos::onButtonPress(BUTTON_JOYSTICK);
+            onButtonPress(BUTTON_JOYSTICK);
         }
     }
 }
@@ -101,7 +103,7 @@ void setup() {
     ucg.setFont(ucg_font_ncenR12_tr);
     ucg.setScale2x2();
     ucg.clearScreen();
-    amorfos::start();
+    start();
 }
 
 void loop() {
@@ -109,19 +111,19 @@ void loop() {
     float oldTime = time;
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
-    amorfos::update(deltaTime);
-    amorfos_internal::render(amorfos::entities, amorfos::entityCount, &ucg);
-    amorfos_internal::checkCollisions(amorfos::entities, amorfos::entityCount);
+    update(deltaTime);
+    render(entities, entityCount, &ucg);
+    checkCollisions(entities, entityCount);
     // destroy required objects
-    for (int i = amorfos::entityCount - 1; i >= 0; i--) {
-        if (amorfos::entities[i]->isDestroyed) {
-            amorfos::entities[i] = amorfos::entities[amorfos::entityCount - 1];
-            amorfos::entityCount--;
-            free(amorfos::entities[amorfos::entityCount]);
+    for (int i = entityCount - 1; i >= 0; i--) {
+        if (entities[i]->isDestroyed) {
+            entities[i] = entities[entityCount - 1];
+            entityCount--;
+            free(entities[entityCount]);
         }
     }
-    amorfos::entities = (amorfos::Entity**)realloc(amorfos::entities, sizeof(amorfos::Entity*) * amorfos::entityCount);
+    entities = (Entity**)realloc(entities, sizeof(Entity*) * entityCount);
     // update joystick input
-    input.joystickX = (1023.0 - analogRead(A4)) / 1023.0;
-    input.joystickY = (1023.0 - analogRead(A5)) / 1023.0;
+    input.joystickX = map(1023.0 - analogRead(A4), 0, 1023.0, -1, 1);
+    input.joystickY = map(1023.0 - analogRead(A5), 0, 1023.0, -1, 1);
 }
