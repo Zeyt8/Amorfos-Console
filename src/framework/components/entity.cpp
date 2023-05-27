@@ -10,8 +10,10 @@ amorfos::Entity* amorfos::newEntity(int type, Vector2<int> position, Vector3<int
     entity->childCount = 0;
     entity->parent = NULL;
     entity->color = color;
+    entity->graphics = 0;
     entity->isVisible = isVisible;
     entity->hasCollision = hasCollision;
+    entity->collisionRadius = 0;
     entity->data = data;
     entity->isDestroyed = false;
 
@@ -39,6 +41,21 @@ void amorfos::setPosition(Entity* entity, int x, int y) {
 
 void amorfos::setColor(Entity* entity, int r, int g, int b) {
     entity->color = newVector3<int>(r, g, b);
+}
+
+void amorfos::setGraphics(Entity* entity, uint16_t graphics[3][3]) {
+    // set graphics bit field
+    entity->graphics = 0;
+    for (int i = 0; i < 3; i++) {
+        int j = 2 - i;
+        entity->graphics |= graphics[0][i] << (j * 3 + 2);
+        entity->graphics |= graphics[1][i] << (j * 3 + 1);
+        entity->graphics |= graphics[2][i] << (j * 3);
+    }
+}
+
+void amorfos::setCollisionRadius(Entity* entity, int8_t collisionRadius) {
+    entity->collisionRadius = collisionRadius;
 }
 
 void amorfos::parent(Entity* entity, Entity* parent) {

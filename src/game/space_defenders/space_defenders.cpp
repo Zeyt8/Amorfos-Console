@@ -9,7 +9,8 @@ using namespace amorfos;
 enum EntityType {
     PLAYER,
     ENEMY,
-    BULLET
+    BULLET,
+    NOTHING
 };
 
 Entity* player;
@@ -19,28 +20,53 @@ uint8_t bulletCount = 0;
 bool needToReload = false;
 int reloadTicks = 2;
 float tickTimer = 1.0f;
-int ticksForEnemyVertical = 5;
-int ticksForSpawnEnemy = 10;
+int ticksForEnemyVertical = 7;
+int ticksForSpawnEnemy = 2;
+int enemyDir = 1;
 
 static void createPlayer() {
     player = createEntity(EntityType::PLAYER, newVector2(0, 0), newVector3(255, 0, 0), true, true, NULL);
-    Entity* rightWing = createEntity(EntityType::PLAYER, newVector2(1, 0), newVector3(255, 0, 0), true, true, NULL);
-    parent(rightWing, player);
-    Entity* leftWing = createEntity(EntityType::PLAYER, newVector2(-1, 0), newVector3(255, 0, 0), true, true, NULL);
-    parent(leftWing, player);
-    Entity* front = createEntity(EntityType::PLAYER, newVector2(0, 1), newVector3(255, 0, 0), true, true, NULL);
-    parent(front, player);
+    uint16_t graphics[3][3] = {
+        { 0, 1, 0 },
+        { 1, 1, 1 },
+        { 0, 0, 0 }
+    };
+    setGraphics(player, graphics);
+    setCollisionRadius(player, 1);
+}
+
+static void createEnemy(int x, int y) {
+    Entity* enemy = createEntity(EntityType::ENEMY, newVector2(x, y), newVector3(0, 255, 0), true, true, NULL);
+    uint16_t graphics[3][3] = {
+        { 1, 0, 1 },
+        { 0, 1, 0 },
+        { 1, 0, 1 }
+    };
+    setGraphics(enemy, graphics);
+    setCollisionRadius(enemy, 1);
+}
+
+static void createBullet(int x, int y) {
+    Entity* bullet = createEntity(EntityType::BULLET, newVector2(x, y), newVector3(255, 255, 0), true, true, NULL);
+    uint16_t graphics[3][3] = {
+        { 0, 0, 0 },
+        { 0, 1, 0 },
+        { 0, 1, 0 }
+    };
+    setGraphics(bullet, graphics);
+    setCollisionRadius(bullet, 0);
 }
 
 void amorfos::start() {
     createPlayer();
-    setPosition(player, LCD_WIDTH / 2, LCD_HEIGHT / 2);
+    setPosition(player, LCD_WIDTH / 2, LCD_HEIGHT / 2 - 10);
     setLED(true, 0);
     setLED(true, 1);
 }
 
 static void onTick()
 {
+    // reload
     if (needToReload) {
         reloadTicks--;
         if (reloadTicks <= 0) {
@@ -49,39 +75,45 @@ static void onTick()
             needToReload = false;
         }
     }
+    // entity movement
     ticksForEnemyVertical--;
     for (int i = 0; i < entityCount; i++) {
         if (entities[i]->type == EntityType::ENEMY) {
-            entities[i]->position.x += 1;
+            move(entities[i], 5 * enemyDir, 0);
             if (ticksForEnemyVertical <= 0) {
-                entities[i]->position.y -= 1;
-                ticksForEnemyVertical = 5;
+                move(entities[i], 0, -10);
             }
         }
         else if (entities[i]->type == EntityType::BULLET) {
-            entities[i]->position.y += 1;
+            move(entities[i], 0, 2);
         }
     }
+    if (ticksForEnemyVertical <= 0) {
+        ticksForEnemyVertical = 7;
+        enemyDir *= -1;
+    }
+    // enemy ocasionally spawns
     ticksForSpawnEnemy--;
     if (ticksForSpawnEnemy <= 0) {
-        for (int i = 0; i < 5; i++) {
-            createEntity(EntityType::ENEMY, newVector2(i * 3, 0), newVector3(0, 255, 0), true, true, NULL);
+        ticksForSpawnEnemy = 22;
+        for (int i = (LCD_WIDTH / 2) - 12; i < (LCD_WIDTH / 2) + 13; i += 5) {
+            createEnemy(i, LCD_HEIGHT - 10);
         }
     }
 }
 
 void amorfos::update(float deltaTime) {
-    /*tickTimer -= deltaTime;
+    tickTimer -= deltaTime;
     if (tickTimer <= 0) {
         tickTimer = 1.0f;
         onTick();
-    }*/
+    }
 }
 
 void amorfos::onButtonPress(int button) {
     if (button == BUTTON_TOP) {
         if (bulletCount > 0) {
-            createEntity(EntityType::BULLET, newVector2(player->position.x, player->position.y), newVector3(255, 255, 0), true, true, NULL);
+            createBullet(player->position.x, player->position.y);
             bulletCount--;
         }
         else {
@@ -91,30 +123,27 @@ void amorfos::onButtonPress(int button) {
 }
 
 void amorfos::onButtonRelease(int button) {
-  
 }
 
 static void gameOver() {
     for (int i = entityCount; i >= 0; i--) {
         destroyEntity(entities[i]);
     }
-    start();
+    //start();
 }
 
 void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
     if (entity1->type == EntityType::PLAYER && entity2->type == EntityType::ENEMY) {
         playerHealth--;
-        if (playerHealth == 0) {
-            destroyEntity(player);
-            if (playerHealth == 1) {
-                setLED(false, LED1);
-            }
-            else if (playerHealth == 0) {
-                setLED(false, LED0);
-            }
+        if (playerHealth == 1) {
+            setLED(false, LED1);
+        }
+        else if (playerHealth == 0) {
+            setLED(false, LED0);
             // game over
             gameOver();
         }
+        destroyEntity(entity2);
     }
     else if (entity1->type == EntityType::BULLET && entity2->type == EntityType::ENEMY) {
         destroyEntity(entity1);

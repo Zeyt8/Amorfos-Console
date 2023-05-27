@@ -8,9 +8,15 @@ void amorfos_internal::render(amorfos::Entity** entities, int entityCount, Ucgli
     ucg->drawBox(0, 0, LCD_WIDTH, LCD_HEIGHT);
     for (int i = 0; i < entityCount; i++) {
         amorfos::Entity* entity = entities[i];
-        if (entity->isVisible) {
+        if (entity->isVisible && entity->graphics != 0 && !entity->isDestroyed) {
             ucg->setColor(entity->color.x, entity->color.y, entity->color.z);
-            ucg->drawPixel(entity->position.x, entity->position.y);
+            for (int x = 0; x < 3; x++) {
+                for (int y = 0; y < 3; y++) {
+                    if ((entity->graphics >> (x * 3 + y)) & 1) {
+                        ucg->drawPixel(entity->position.y + y - 1, entity->position.x + x - 1);
+                    }
+                }
+            }
         }
     }
 }
