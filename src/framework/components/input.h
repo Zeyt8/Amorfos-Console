@@ -15,8 +15,6 @@ namespace amorfos
         bool buttonWest;
         bool buttonSouth;
         bool buttonEast;
-        bool buttonStart;
-        bool buttonSelect;
         bool buttonJoystick;
     } Input;
 
