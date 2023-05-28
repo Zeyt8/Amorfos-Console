@@ -6,9 +6,7 @@ namespace amorfos
     #define BUTTON_RIGHT 3
     #define BUTTON_BOTTOM 4
     #define BUTTON_LEFT 5
-    #define BUTTON_START 6
-    #define BUTTON_SELECT 7
-    #define BUTTON_JOYSTICK 8
+    #define BUTTON_JOYSTICK 6
 
     typedef struct Input {
         float joystickX;

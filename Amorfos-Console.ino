@@ -48,23 +48,7 @@ ISR(PCINT2_vect) {
             input.buttonEast = true;
             onButtonPress(BUTTON_LEFT);
         }
-    }/* else if ((PIND & (1 << BUTTON_START)) == 0) {
-        if (input.buttonStart) {
-            input.buttonStart = false;
-            onButtonRelease(BUTTON_START);
-        } else {
-            input.buttonStart = true;
-            onButtonPress(BUTTON_START);
-        }
-    } else if ((PIND & (1 << BUTTON_SELECT)) == 0) {
-        if (input.buttonSelect) {
-            input.buttonSelect = false;
-            onButtonRelease(BUTTON_SELECT);
-        } else {
-            input.buttonSelect = true;
-            onButtonPress(BUTTON_SELECT);
-        }
-    }*/
+    }
 }
 
 ISR(PCINT0_vect) {
@@ -86,12 +70,12 @@ void setup() {
     cli();
     // setup input
     // setup intrerrupts for buttons
-    DDRD &= ~(1 << BUTTON_TOP) & ~(1 << BUTTON_RIGHT) & ~(1 << BUTTON_BOTTOM) & ~(1 << BUTTON_LEFT)/* & ~(1 << BUTTON_START) & ~(1 << BUTTON_SELECT)*/;
+    DDRD &= ~(1 << BUTTON_TOP) & ~(1 << BUTTON_RIGHT) & ~(1 << BUTTON_BOTTOM) & ~(1 << BUTTON_LEFT);
     DDRB &= ~(1 << BUTTON_JOYSTICK);
-    PORTD |= (1 << BUTTON_TOP) | (1 << BUTTON_RIGHT) | (1 << BUTTON_BOTTOM) | (1 << BUTTON_LEFT)/* | (1 << BUTTON_START) | (1 << BUTTON_SELECT)*/;
+    PORTD |= (1 << BUTTON_TOP) | (1 << BUTTON_RIGHT) | (1 << BUTTON_BOTTOM) | (1 << BUTTON_LEFT);
     PORTB |= (1 << BUTTON_JOYSTICK);
     PCICR |= (1 << PCIE2) | (1 << PCIE0);
-    PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21)/* | (1 << PCINT22) | (1 << PCINT23)*/;
+    PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21);
     PCMSK0 |= (1 << PCINT0);
     pinMode(8, INPUT_PULLUP);
     // setup LED output
@@ -126,4 +110,11 @@ void loop() {
     // update joystick input
     input.joystickX = map(1023.0 - analogRead(A4), 0, 1023.0, -1, 1);
     input.joystickY = map(1023.0 - analogRead(A5), 0, 1023.0, -1, 1);
+    // restart if required
+    if (toRestart) {
+        for (int i = entityCount; i >= 0; i--) {
+            destroyEntity(entities[i]);
+        }
+        start();
+    }
 }

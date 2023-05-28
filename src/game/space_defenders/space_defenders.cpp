@@ -129,10 +129,7 @@ void amorfos::onButtonRelease(int button) {
 }
 
 static void gameOver() {
-    for (int i = entityCount; i >= 0; i--) {
-        destroyEntity(entities[i]);
-    }
-    //start();
+    restart();
 }
 
 void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {

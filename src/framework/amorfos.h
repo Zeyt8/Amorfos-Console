@@ -13,6 +13,7 @@ namespace amorfos
 {
     inline amorfos::Entity** entities;
     inline unsigned int entityCount;
+    inline bool toRestart = false;
 
     /// @brief Called at the start of the game
     void start();
@@ -20,6 +21,9 @@ namespace amorfos
     /// @brief The main game loop. Delta time is the time since the last time the loop was called.
     /// @param deltaTime 
     void update(float deltaTime);
+
+    /// @brief Restart the game
+    void restart();
 
     /// @brief Create an entity
     /// @return The created entity
