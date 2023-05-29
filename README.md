@@ -105,6 +105,8 @@ Example of a ship from space_defenders demo:
     };
     setGraphics(player, graphics);
 
+The variable renderUpdateFrequency determines once how many seconds the screen is updated. A value below 0 means the screen is updated every frame.
+
 There are also 2 LEDs that you can control.
 
 ### Audio
