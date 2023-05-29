@@ -2,7 +2,7 @@
 
 #include "Arduino.h"
 
-void amorfos_internal::render(amorfos::Entity** entities, int entityCount, Ucglib_ILI9341_18x240x320_HWSPI* ucg) {
+void amorfos_internal::render(amorfos::Entity** entities, int entityCount, Ucglib_ILI9341_18x240x320_SWSPI* ucg) {
     ucg->clearScreen();
     ucg->setColor(0, 0, 0, 0);
     ucg->drawBox(0, 0, LCD_WIDTH, LCD_HEIGHT);

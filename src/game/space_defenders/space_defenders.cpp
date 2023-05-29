@@ -118,6 +118,7 @@ void amorfos::onButtonPress(int button) {
         if (bulletCount > 0) {
             createBullet(player->position.x, player->position.y);
             bulletCount--;
+            playSound(1000, 100);
         }
         else {
             needToReload = true;
@@ -135,6 +136,7 @@ static void gameOver() {
 void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
     if (entity1->type == EntityType::PLAYER && entity2->type == EntityType::ENEMY) {
         playerHealth--;
+        playSound(1000, 100);
         if (playerHealth == 1) {
             setLED(false, LED1);
         }

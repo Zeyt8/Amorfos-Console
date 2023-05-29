@@ -8,7 +8,7 @@
 using namespace amorfos;
 using namespace amorfos_internal;
 
-Ucglib_ILI9341_18x240x320_HWSPI ucg(/*cd=*/ 9 , /*cs=*/ 10, /*reset=*/ 12);
+Ucglib_ILI9341_18x240x320_SWSPI ucg(/*sclk=*/ 13, /*data=*/ 11, /*cd=*/ 9, /*cs=*/ 10, /*reset=*/ 12);
 
 float time = 0;
 volatile int debouncing = 0;

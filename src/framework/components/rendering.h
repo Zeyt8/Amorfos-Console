@@ -5,7 +5,7 @@
 
 namespace amorfos_internal
 {
-    void render(amorfos::Entity** entities, int entityCount, Ucglib_ILI9341_18x240x320_HWSPI* ucg);
+    void render(amorfos::Entity** entities, int entityCount, Ucglib_ILI9341_18x240x320_SWSPI* ucg);
 }
 
 namespace amorfos
