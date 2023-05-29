@@ -16,7 +16,7 @@ enum EntityType {
 Entity* player;
 uint8_t playerHealth = 2;
 uint8_t maxBullets = 3;
-uint8_t bulletCount = 0;
+uint8_t bulletCount = 3;
 bool needToReload = false;
 int reloadTicks = 2;
 float tickTimer = 1.0f;
@@ -62,6 +62,7 @@ void amorfos::start() {
     setPosition(player, LCD_WIDTH / 2, LCD_HEIGHT / 2 - 10);
     setLED(true, 0);
     setLED(true, 1);
+    renderUpdateFrequency = 1.0f;
 }
 
 static void onTick()
@@ -88,7 +89,7 @@ static void onTick()
             move(entities[i], 0, 2);
         }
         else if (entities[i]->type == EntityType::PLAYER) {
-            move(entities[i], input.joystickX, input.joystickY);
+            move(entities[i], input.joystickX * 10, input.joystickY * 10);
         }   
     }
     if (ticksForEnemyVertical <= 0) {
@@ -118,7 +119,7 @@ void amorfos::onButtonPress(int button) {
         if (bulletCount > 0) {
             createBullet(player->position.x, player->position.y);
             bulletCount--;
-            playSound(1000, 100);
+            playSound(900, 500);
         }
         else {
             needToReload = true;
@@ -136,7 +137,7 @@ static void gameOver() {
 void amorfos::onCollision(amorfos::Entity* entity1, amorfos::Entity* entity2) {
     if (entity1->type == EntityType::PLAYER && entity2->type == EntityType::ENEMY) {
         playerHealth--;
-        playSound(1000, 100);
+        playSound(600, 1000);
         if (playerHealth == 1) {
             setLED(false, LED1);
         }

@@ -13,7 +13,9 @@ namespace amorfos
     #define LCD_WIDTH 160
     #define LCD_HEIGHT 120
     #define LED0 PD1
-    #define LED1 PD0                                                               
+    #define LED1 PD0  
+
+    inline float renderUpdateFrequency = -1.0f;                                                             
 
     /// @brief Sets the state of an LED
     /// @param on The state of the LED

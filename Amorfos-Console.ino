@@ -12,6 +12,7 @@ Ucglib_ILI9341_18x240x320_SWSPI ucg(/*sclk=*/ 13, /*data=*/ 11, /*cd=*/ 9, /*cs=
 
 float time = 0;
 volatile int debouncing = 0;
+float timeToRender = 0;
 
 ISR(PCINT2_vect) {
     if (millis() - debouncing < 100) return;
@@ -68,7 +69,6 @@ ISR(PCINT0_vect) {
 void setup() {
     delay(1000);
     cli();
-    // setup input
     // setup intrerrupts for buttons
     DDRD &= ~(1 << BUTTON_TOP) & ~(1 << BUTTON_RIGHT) & ~(1 << BUTTON_BOTTOM) & ~(1 << BUTTON_LEFT);
     DDRB &= ~(1 << BUTTON_JOYSTICK);
@@ -77,17 +77,42 @@ void setup() {
     PCICR |= (1 << PCIE2) | (1 << PCIE0);
     PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT21);
     PCMSK0 |= (1 << PCINT0);
-    pinMode(8, INPUT_PULLUP);
     // setup LED output
     DDRD |= (1 << LED0);
     DDRD |= (1 << LED1);
+    // setup buzzer
+    DDRD |= (1 << BUZZER);
     sei();
     // lcd setup
     ucg.begin(UCG_FONT_MODE_TRANSPARENT);
     ucg.setFont(ucg_font_ncenR12_tr);
     ucg.setScale2x2();
     ucg.clearScreen();
+    timeToRender = renderUpdateFrequency;
     start();
+}
+
+static void handleJoystick() {
+    input.joystickX = analogRead(A4);
+    input.joystickY = analogRead(A5);
+    if (input.joystickX > 600) {
+        input.joystickX = -1;
+    }
+    else if (input.joystickX < 400) {
+        input.joystickX = 1;
+    }
+    else {
+        input.joystickX = 0;
+    }
+    if (input.joystickY > 600) {
+        input.joystickY = -1;
+    }
+    else if (input.joystickY < 400) {
+        input.joystickY = 1;
+    }
+    else {
+        input.joystickY = 0;
+    }
 }
 
 void loop() {
@@ -96,7 +121,16 @@ void loop() {
     time = millis() / 1000.0f;
     float deltaTime = time - oldTime;
     update(deltaTime);
-    render(entities, entityCount, &ucg);
+    if (renderUpdateFrequency < 0) {
+        render(entities, entityCount, &ucg);
+    }
+    else {
+        timeToRender += deltaTime;
+        if (timeToRender >= renderUpdateFrequency) {
+            render(entities, entityCount, &ucg);
+            timeToRender = 0;
+        }
+    }
     checkCollisions(entities, entityCount);
     // destroy required objects
     for (int i = entityCount - 1; i >= 0; i--) {
@@ -108,8 +142,7 @@ void loop() {
     }
     entities = (Entity**)realloc(entities, sizeof(Entity*) * entityCount);
     // update joystick input
-    input.joystickX = map(1023.0 - analogRead(A4), 0, 1023.0, -1, 1);
-    input.joystickY = map(1023.0 - analogRead(A5), 0, 1023.0, -1, 1);
+    handleJoystick();
     // restart if required
     if (toRestart) {
         for (int i = entityCount; i >= 0; i--) {
